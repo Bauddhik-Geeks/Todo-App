@@ -2,11 +2,13 @@ from tkinter import *
 from tkinter.font import Font
 from tkinter import filedialog
 import pickle
+import sqlite3
+import mysql.connector as mysql
 
 root = Tk()
 root.title('Nitesh-TODO List!')
 root.geometry("500x500")
-
+name = StringVar()
 
 ############### Fonts ################
 
@@ -51,21 +53,37 @@ my_list.config(yscrollcommand=my_scrollbar.set)
 my_scrollbar.config(command=my_list.yview)
 
 ################### ADD item entry box#################
-my_entry = Entry(root, font=("Helvetica", 24),width=24)
+my_entry = Entry(root, font=("Helvetica", 24),width=24, textvariable=name)
 my_entry.pack(pady=20)
 
 ######################## Crete button frame ##########
 button_frame=Frame(root)
 button_frame.pack(pady=20)
 
+
 ##################### Funnctions ###################
 def delete_item():
+    con = sqlite3.connect("database.db")
+    cursor = con.cursor()
+    items = my_list.get(ANCHOR)
+    query = "DELETE from Items where Todo_list=?"
+    cursor.execute(query,(items,))
     my_list.delete(ANCHOR)
+    con.commit()
+    cursor.close()
 
 def add_item():
     my_list.insert(END, my_entry.get())
+    name1 = name.get()
+    conn = sqlite3.connect('database.db')
+    with conn:
+       c = conn.cursor()
+    c.execute("CREATE TABLE IF NOT EXISTS Items(Todo_list TEXT)")   
+    c.execute('INSERT INTO Items(Todo_list) VALUES (?)',(name1,)) 
+    conn.commit()   
     my_entry.delete(0, END)
 
+ 
 def cross_off_item():
     # Cross Off Item
     my_list.itemconfig(
@@ -83,6 +101,14 @@ def uncross_item():
     my_list.selection_clear(0,END)
     
 def delete_crossed():
+    con = sqlite3.connect("database.db")
+    cursor = con.cursor()
+    items = my_list.get(ANCHOR)
+    query = "DELETE from Items where Todo_list=?"
+    cursor.execute(query,(items,))
+    my_list.delete(ANCHOR)
+    con.commit()
+    cursor.close()
     count = 0
     while count < my_list.size():
         if my_list.itemcget(count, "fg")=="#dedede":
@@ -146,8 +172,7 @@ def open_list():
     
 def delete_list():
     my_list.delete(0,END)
-    
-    
+
 ####################### Create Menu ##############    
 
 my_menu = Menu(root)
@@ -181,6 +206,4 @@ cross_off_button.grid(row=0,column=2)
 uncross_button.grid(row=0,column=3, padx=20) 
 delete_crossed_button.grid(row=0,column=4) 
 
-
-     
 root.mainloop()   
