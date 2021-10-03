@@ -117,36 +117,19 @@ def delete_crossed():
             count+=1
             
 def save_list():
-    file_name = filedialog.asksaveasfilename(
-        initialdir="C:/gui/data",
-        title="Save File",
-        filetypes=(("Text Files","*.txt")
-                   ,("All Files","*.*"))
-        ) 
-    if file_name:
-        if file_name.endswith(".txt"):
-            pass
-        else:
-            file_name=f'{file_name}.txt'
-            
-        #Delete Cross off items before saving 
-        count = 0
-        while count < my_list.size():
-            if my_list.itemcget(count, "fg")=="#dedede":
-                my_list.delete(my_list.index(count))
-            else:
-                count+=1
-                
-        # grab everything from the list
-        stuff = my_list.get(0, END)
-        
-        # open the selected file
-        output_file = open(file_name, 'wb')
-        
-        #add data to the file
-        pickle.dump(stuff,output_file)
-            
-        
+    file = filedialog.asksaveasfile(initialdir="C:\\Users\\Deepu John\\OneDrive\\Deepu 2020\\Projects\\rough",
+                                    defaultextension='.txt',
+                                    filetypes=[
+                                        ("Text file",".txt"),
+                                        ("HTML file", ".html"),
+                                        ("All files", ".*"),
+                                    ])
+    if file is None:
+        return
+    filetext = '\n'.join(my_list.get('0', 'end'))
+    file.write(filetext)
+    file.close()
+
 
 def open_list():
     file_name = filedialog.askopenfilename(
