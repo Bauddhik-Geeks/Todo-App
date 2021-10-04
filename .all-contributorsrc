@@ -1,0 +1,24 @@
+{
+  "files": [
+    "README.md"
+  ],
+  "imageSize": 100,
+  "commit": false,
+  "contributors": [
+    {
+      "login": "deeppss",
+      "name": "Deepu John",
+      "avatar_url": "https://avatars.githubusercontent.com/u/77568465?v=4",
+      "profile": "https://github.com/deeppss",
+      "contributions": [
+        "code"
+      ]
+    }
+  ],
+  "contributorsPerLine": 7,
+  "projectName": "Todo-App",
+  "projectOwner": "Bauddhik-Geeks",
+  "repoType": "github",
+  "repoHost": "https://github.com",
+  "skipCi": true
+}
