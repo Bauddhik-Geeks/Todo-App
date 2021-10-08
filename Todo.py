@@ -7,13 +7,13 @@ import mysql.connector as mysql
 
 root = Tk()
 root.title('Nitesh-TODO List!')
-root.geometry("500x500")
+root.geometry("500x450")
 name = StringVar()
 
 ############### Fonts ################
 
 my_font = Font(
-    family="Brush Script MT",
+    family="PT Sans",
     size=30,
     weight="bold")
 
@@ -156,6 +156,36 @@ def open_list():
 def delete_list():
     my_list.delete(0,END)
 
+def dark_theme():
+    colorbg = 'black'
+    colorfg = 'white'
+    my_list.config(bg='#152642', fg=colorfg)
+    add_button.config(bg=colorbg, fg=colorfg)
+    delete_button.config(bg=colorbg, fg=colorfg)
+    cross_off_button.config(bg=colorbg, fg=colorfg)
+    delete_crossed_button.config(bg=colorbg, fg=colorfg)
+    uncross_button.config(bg=colorbg, fg=colorfg)
+    my_entry.config(bg='#152642', fg=colorfg)
+    dark_mode_button.config(bg=colorbg, fg=colorfg)
+    light_mode_button.config(bg=colorbg, fg=colorfg)
+    root.config(bg=colorbg)
+    button_frame.config(bg=colorbg)
+
+def light_theme():
+    colorbg = 'white'
+    colorfg = 'black'
+    my_list.config(bg=colorbg, fg=colorfg)
+    add_button.config(bg=colorbg, fg=colorfg)
+    delete_button.config(bg=colorbg, fg=colorfg)
+    cross_off_button.config(bg=colorbg, fg=colorfg)
+    delete_crossed_button.config(bg=colorbg, fg=colorfg)
+    uncross_button.config(bg=colorbg, fg=colorfg)
+    my_entry.config(bg=colorbg, fg=colorfg)
+    dark_mode_button.config(bg=colorbg, fg=colorfg)
+    light_mode_button.config(bg=colorbg, fg=colorfg)
+    root.config(bg='#D3D3D3')
+    button_frame.config(bg='#D3D3D3')
+
 ####################### Create Menu ##############    
 
 my_menu = Menu(root)
@@ -168,10 +198,9 @@ my_menu.add_cascade(label="File", menu=file_menu)
 
 ############### Add Dorpdowm Items ####################
 
-file_menu.add_command(label="Save List", command=save_list)
 file_menu.add_command(label="Open List", command=open_list)
-
 file_menu.add_command(label="Clear List", command=delete_list)
+file_menu.add_command(label="Save List", command=save_list)
 
 ################# Add Buttons ################
 
@@ -180,6 +209,8 @@ add_button = Button(button_frame, text="Add Item",command=add_item)
 cross_off_button = Button(button_frame, text="Cross Item",command=cross_off_item)
 uncross_button = Button(button_frame, text="Uncross Item",command=uncross_item)
 delete_crossed_button = Button(button_frame, text="Delete Cross Item",command=delete_crossed)
+dark_mode_button = Button(button_frame, text='Night mode', command=dark_theme)
+light_mode_button = Button(button_frame, text='Day mode', command=light_theme)
 
 file_menu.add_separator()
 
@@ -187,6 +218,8 @@ delete_button.grid(row=0,column=0)
 add_button.grid(row=0,column=1, padx=20)  
 cross_off_button.grid(row=0,column=2)  
 uncross_button.grid(row=0,column=3, padx=20) 
-delete_crossed_button.grid(row=0,column=4) 
+delete_crossed_button.grid(row=0,column=4)
+light_mode_button.grid(row=1,column=2)
+dark_mode_button.grid(row=1,column=3) 
 
 root.mainloop()   
